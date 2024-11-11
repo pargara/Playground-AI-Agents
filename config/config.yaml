@@ -1,0 +1,83 @@
+# Configuración del modelo
+model:
+  name: "gpt-4o-mini"
+  temperature: 0.7
+  max_tokens: 1000
+
+# Configuración de agentes
+agents:
+  structure:
+    model:
+      name: "gpt-4"
+    temperature: 0.7
+    max_tokens: 500
+    prompt: |
+      Eres un experto en SEO y estructuración de contenido. 
+      Dado un tema, debes crear:
+      1. Un título atractivo y optimizado para SEO
+      2. Una lista de subtítulos relevantes
+      3. Palabras clave importantes para SEO
+      
+      Tema: {topic}
+      
+      Responde en formato JSON con la siguiente estructura exacta:
+      {{
+        "title": "Título del blog",
+        "subtitles": ["subtítulo1", "subtítulo2"],
+        "keywords": ["keyword1", "keyword2"]
+      }}
+  
+  content:
+    model:
+      name: "gpt-4"
+    temperature: 0.8
+    max_tokens: 1000
+    prompt: |
+      Eres un redactor experto en crear contenido detallado y atractivo.
+      Desarrolla contenido para cada sección del siguiente esquema de blog:
+      
+      Título: {title}
+      Subtítulos: {subtitles}
+      Keywords: {keywords}
+      
+      Genera contenido detallado para cada subtítulo.
+      El contenido debe incorporar naturalmente las palabras clave proporcionadas.
+      
+      Responde en formato JSON con la siguiente estructura exacta:
+      {{
+        "sections": [
+          {{
+            "subtitle": "subtítulo1",
+            "content": "contenido detallado"
+          }}
+        ]
+      }}
+
+# Configuración de la aplicación
+app:
+  title: "Generador de Contenido para Blogs"
+  description: "Genera contenido optimizado para SEO de manera automática"
+
+structure_agent:
+  model:
+    name: "gpt-4o-mini"
+  temperature: 0.7
+  max_tokens: 1000
+  prompt: |
+    Actúa como un experto en SEO y estructuración de contenido.
+    Genera una estructura optimizada para SEO para un blog sobre el siguiente tema: {topic}
+
+    Devuelve la respuesta en formato JSON con la siguiente estructura:
+    {
+      "title": "Título optimizado para SEO",
+      "subtitles": [
+        "Subtítulo 1: Descripción",
+        "Subtítulo 2: Descripción",
+        ...
+      ],
+      "keywords": [
+        "palabra clave 1",
+        "palabra clave 2",
+        ...
+      ]
+    }
